@@ -47,3 +47,20 @@ def update_view(request, pk):
             return redirect('index_view', pk=record.pk)
         else:
             return render(request, 'update.html', context={'form': form, 'record': record})
+
+
+def delete_view(request, pk):
+    record = get_object_or_404(Record, pk=pk)
+    if request.method == 'GET':
+        return render(request, 'delete.html', context={'record': record})
+    elif request.method == 'POST':
+        record.delete()
+        return redirect('index')
+
+
+def search_view(request, *args, **kwargs):
+    list = request.GET.get('search', '')
+    print(list)
+    form = Record.objects.filter(name__contains=list)
+    print(form)
+    return render(request, 'index.html', context={'form': form })

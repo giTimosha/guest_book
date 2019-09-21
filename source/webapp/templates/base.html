@@ -19,9 +19,11 @@
   <a class="navbar-brand" href="{% url 'index' %}">Home</a>
     {% block menu %}{% endblock %}
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+
+    <form class="form-inline my-2 my-lg-0" action="{% url 'search_view' %}" method="GET" name="search">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+        <button type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0"></button>
     </form>
   </div>
 </nav>

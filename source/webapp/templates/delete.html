@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Delete Record{% endblock %}
+{% block content %}
+    <h1>Ты че, серьезно хочешь удолить ?"{{ record }}"?</h1>
+    <form method="POST" action="{% url "record_delete" record.pk %}" class="text-center">
+        {% csrf_token %}
+        <p><input class="btn btn-danger" type="submit" value="конечно"></p>
+        <p><a class="btn btn-dark" href="{% url "index" %}">нееееее</a></p>
+    </form>
+{% endblock %}
