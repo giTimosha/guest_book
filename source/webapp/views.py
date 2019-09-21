@@ -5,8 +5,9 @@ from webapp.models import Record
 
 
 def index_view(request):
-    products = Record.objects.filter(status='active').order_by('-created')
-    return render(request, 'index.html', context={'products': products})
+    records = Record.objects.filter(status='active').order_by('-created')
+    return render(request, 'index.html', context={'records': records})
+
 
 def create_view(request, *args, **kwargs):
     if request.method == 'GET':
@@ -25,3 +26,24 @@ def create_view(request, *args, **kwargs):
 
 
             return render(request, 'create.html', context={'form': form})
+
+
+def update_view(request, pk):
+    record = get_object_or_404(Record, pk=pk)
+    if request.method == 'GET':
+        form = RecordForm(data={
+            'name': record.name,
+            'mail': record.email,
+            'text': record.text,
+        })
+        return render(request, 'update.html', context={'form': form, 'record': record})
+    elif request.method == 'POST':
+        form = RecordForm(data=request.POST)
+        if form.is_valid():
+            record.name = form.cleaned_data['name']
+            record.email = form.cleaned_data['mail']
+            record.text = form.cleaned_data['text']
+            record.save()
+            return redirect('index_view', pk=record.pk)
+        else:
+            return render(request, 'update.html', context={'form': form, 'record': record})
