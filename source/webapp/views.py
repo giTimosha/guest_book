@@ -58,9 +58,9 @@ def delete_view(request, pk):
         return redirect('index')
 
 
-def search_view(request, *args, **kwargs):
+def search_view(request):
     list = request.GET.get('search', '')
     print(list)
-    form = Record.objects.filter(name__contains=list)
-    print(form)
-    return render(request, 'index.html', context={'form': form })
+    records = Record.objects.filter(name__contains=list)
+    print(records)
+    return render(request, 'index.html', context={'records': records})
